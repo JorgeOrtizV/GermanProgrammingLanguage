@@ -3,6 +3,7 @@ import json
 import sys
 
 def multiplication(elements):
+    # Allows multiplication of N numbers
     assert len(elements) > 1
     elements = list(map(do, elements))
     return reduce(lambda x,y : x*y, elements)
