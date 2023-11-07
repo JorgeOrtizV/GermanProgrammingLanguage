@@ -122,27 +122,39 @@ def do_print(envs,args):
 
 
 def do_dict(envs,args):
-    assert len(args) == 1
-    N = args[0]
-    value = {_} *N
-    return value
+    assert len(args) < 3
+    if  len(args) == 0:
+        return dict()
+    else:
+        temp_dict = dict()
+        for i in range(len(args[0])):
+            temp_dict[args[0][i]] = args[1][i]
+        return temp_dict
 
 def do_get_dict(envs,args):
     assert len(args) == 2
-    value = args[0][args[1]]
+    if isinstance(args[0], list):
+        mydict = do(envs, args[0])
+    else:
+        mydict = args[0]
+    value = mydict[args[1]]
     return value
 
 def do_set_dict(envs,args):
     assert len(args) == 3
-    value = args[0][args[1]]
-    args[2] = do(envs,value)
+    if isinstance(args[0], list):
+        mydict = do(envs, args[0])
+        mydict[args[1]] = args[2]
+    else:
+        args[0][args[1]] = args[2]
+    # Setting value in an array doesn't return a function.
 
 def do_merge_dict(envs,args):
     assert len(args) == 3
-    value1 = do(envs,args[0])
-    value2 = do(envs,args[1])
+    value1 = do(envs,args[1])
+    value2 = do(envs,args[2])
     value = {**value1, **value2}
-    args[2] = do(envs,value)
+    return value
 
 # Create an array
 def do_array(envs, args):
@@ -183,7 +195,7 @@ def do(envs,expr):
     if isinstance(expr,int):
         return expr
    
-    assert isinstance(expr,list) or isinstance(expr)
+    assert isinstance(expr,list)
     assert expr[0] in OPERATIONS, f"Unknown operation {expr[0]}"
     func = OPERATIONS[expr[0]]
     return func(envs, expr[1:])
