@@ -115,6 +115,29 @@ def do_print(envs,args):
     print(op)
     # Print doesn't return a value
 
+def do_dict(envs,args):
+    assert len(args) == 1
+    N = args[0]
+    value = {_} *N
+    return value
+
+def do_get_dict(envs,args):
+    assert len(args) == 2
+    value = args[0][args[1]]
+    return value
+
+def do_set_dict(envs,args):
+    assert len(args) == 3
+    value = args[0][args[1]]
+    args[2] = do(envs,value)
+
+def do_merge_dict(envs,args):
+    assert len(args) == 3
+    value1 = do(envs,args[0])
+    value2 = do(envs,args[1])
+    value = {**value1, **value2}
+    args[2] = do(envs,value)
+
 OPERATIONS = {
     func_name.replace("do_",""): func_body
     for (func_name, func_body) in globals().items()
@@ -126,7 +149,7 @@ def do(envs,expr):
     if isinstance(expr,int):
         return expr
    
-    assert isinstance(expr,list)
+    assert isinstance(expr,list) or isinstance(expr)
     assert expr[0] in OPERATIONS, f"Unknown operation {expr[0]}"
     func = OPERATIONS[expr[0]]
     return func(envs, expr[1:])
