@@ -1,13 +1,15 @@
 import sys
 import json
 
+in_use = None
+
 def do_funktion(envs,args): # TODO: Review what this does
     assert len(args) == 2
     params = args[0]
     body = args[1]
     return ["funktion",params,body]
 
-def do_aufrufen(envs,args): # Casting
+def do_aufrufen(envs,args): # Delete value
     assert len(args) >= 1
     name = args[0]
     arguments = args[1:]
@@ -29,9 +31,11 @@ def do_aufrufen(envs,args): # Casting
     return result
 
 def envs_get(envs, name):
+    global in_use
     assert isinstance(name,str)
     for e in reversed(envs):
-        if name in e:
+        if name in e.keys():
+            in_use = name
             return e[name]
         
     # python like version
@@ -47,8 +51,8 @@ def envs_set(envs,name,value):
     #     if name in e:
     #         e[name] = value
     #         return
-    envs[-1][name] = value
-        
+    exec("{}={}".format(name, value))
+    envs[-1][name] = value        
 
 
 def do_setzen(envs,args): # Set a value
@@ -57,6 +61,7 @@ def do_setzen(envs,args): # Set a value
     var_name = args[0]
     value = do(envs,args[1])
     envs_set(envs,var_name, value)
+    print("Created instance {} with value {}".format(var_name, value))
     return value
 
 def do_abrufen(envs,args): # Obtain value of variable
@@ -115,6 +120,7 @@ def do_print(envs,args):
     print(op)
     # Print doesn't return a value
 
+
 def do_dict(envs,args):
     assert len(args) == 1
     N = args[0]
@@ -137,6 +143,34 @@ def do_merge_dict(envs,args):
     value2 = do(envs,args[1])
     value = {**value1, **value2}
     args[2] = do(envs,value)
+
+# Create an array
+def do_array(envs, args):
+    assert len(args) == 1
+    N = args[0]
+    array = [None] * N 
+    return array
+
+# Get N value of array
+def do_get_array(envs,args):
+    assert len(args) == 2
+    if isinstance(args[0], list):
+        array = do(envs, args[0])
+    else:
+        array = args[0]
+    value = array[args[1]]
+    return value
+
+# Set value of an array
+def do_set_array(envs,args):
+    assert len(args) == 3
+    if isinstance(args[0], list):
+        array = do(envs, args[0])
+        array[args[1]] = args[2]
+    else:
+        args[0][args[1]] = args[2]
+    # Setting value in an array doesn't return a function.
+
 
 OPERATIONS = {
     func_name.replace("do_",""): func_body
