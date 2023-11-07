@@ -111,7 +111,9 @@ def do_power(envs,args):
 
 def do_print(envs,args):
     assert len(args) == 1
-    print(args[0])
+    op = do(envs,args[0])
+    print(op)
+    # Print doesn't return a value
 
 OPERATIONS = {
     func_name.replace("do_",""): func_body
