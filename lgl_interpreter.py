@@ -10,6 +10,7 @@ def do_funktion(envs,args): # TODO: Review what this does
     return ["funktion",params,body]
 
 def do_aufrufen(envs,args): # Delete value
+    #import pdb; pdb.set_trace()
     assert len(args) >= 1
     name = args[0]
     arguments = args[1:]
@@ -33,6 +34,7 @@ def do_aufrufen(envs,args): # Delete value
 def envs_get(envs, name):
     global in_use
     assert isinstance(name,str)
+    #import pdb; pdb.set_trace()
     for e in reversed(envs):
         if name in e.keys():
             in_use = name
@@ -182,6 +184,30 @@ def do_set_array(envs,args):
     else:
         args[0][args[1]] = args[2]
     # Setting value in an array doesn't return a function.
+
+def do_while(envs, args):
+    # condition, body
+    assert len(args) == 2
+    state_condition = do(envs, args[0])
+    if state_condition == True:
+        do(envs, args[1])
+        do_while(envs, args)
+    else:
+        return
+
+# ["do_while_condition", 1, "lt", 2]
+def do_while_condition(envs, args):
+    assert len(args) == 3
+    assert isinstance(args[1], str)
+    item1 = do(envs, args[0])
+    item2 = do(envs, args[2])
+    if args[1] == 'lt':
+        return item1 < item2
+    elif args[1] == 'gt':
+        return item1 > item2
+    elif args[1] == 'eq':
+        return item1 == item2
+
 
 
 OPERATIONS = {
