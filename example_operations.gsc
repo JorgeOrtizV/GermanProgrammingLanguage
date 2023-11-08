@@ -16,6 +16,14 @@
         ["set_dict", ["abrufen", "mydict"], "key2", 20],
         ["print", ["abrufen", "mydict"]],
         ["setzen", "mydict2", ["dict", ["key3", "key4"], [5, 6]]],
-        ["merge_dict", "newdict", ["abrufen", "mydict"], ["abrufen", "mydict2"]]
-]
+        ["merge_dict", "newdict", ["abrufen", "mydict"], ["abrufen", "mydict2"]],
 
+        ["setzen", "increase",
+                ["funktion", ["num"],
+                        ["addieren", ["abrufen", "num"], 1]
+                ] 
+        ],
+        ["setzen", "a", 0],
+        ["while", ["while_condition", ["abrufen", "a"], "lt", 10], ["setzen", "a", ["aufrufen", "increase", ["abrufen", "a"]]]]
+
+]
