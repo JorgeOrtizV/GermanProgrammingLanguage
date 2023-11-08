@@ -53,7 +53,10 @@ def envs_set(envs,name,value):
     #     if name in e:
     #         e[name] = value
     #         return
-    exec("{}={}".format(name, value))
+    if isinstance(value, str):
+        exec("{}={}".format(name, "\'"+value+"\'"))
+    else:
+        exec("{}={}".format(name, value))
     envs[-1][name] = value        
 
 
@@ -143,12 +146,21 @@ def do_get_dict(envs,args):
     return value
 
 def do_set_dict(envs,args):
+    #import pdb; pdb.set_trace()
     assert len(args) == 3
+    if isinstance(args[1], list):
+        key = do(envs, args[1])
+    else:
+        key = args[1]
+    if isinstance(args[2], list):
+        value = do(envs, args[2])
+    else:
+        value = args[2]
     if isinstance(args[0], list):
         mydict = do(envs, args[0])
-        mydict[args[1]] = args[2]
+        mydict[key] = value
     else:
-        args[0][args[1]] = args[2]
+        args[0][key] = value
     # Setting value in an array doesn't return a function.
 
 def do_merge_dict(envs,args):
@@ -207,6 +219,9 @@ def do_while_condition(envs, args):
         return item1 > item2
     elif args[1] == 'eq':
         return item1 == item2
+    
+#################  Extended OOP  ##########################
+
 
 
 
@@ -218,9 +233,8 @@ OPERATIONS = {
 
 
 def do(envs,expr):
-    if isinstance(expr,int):
+    if isinstance(expr,int) or isinstance(expr, str):
         return expr
-   
     assert isinstance(expr,list)
     assert expr[0] in OPERATIONS, f"Unknown operation {expr[0]}"
     func = OPERATIONS[expr[0]]
