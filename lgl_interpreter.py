@@ -255,7 +255,7 @@ OPERATIONS = {
 
 
 def do(envs,expr):
-    if isinstance(expr,int) or isinstance(expr, str):
+    if isinstance(expr,int) or isinstance(expr, str) or isinstance(expr, float):
         return expr
     assert isinstance(expr,list)
     assert expr[0] in OPERATIONS, f"Unknown operation {expr[0]}"
