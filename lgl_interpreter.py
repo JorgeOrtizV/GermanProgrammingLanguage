@@ -9,7 +9,25 @@ def do_funktion(envs,args): # TODO: Review what this does
     body = args[1]
     return ["funktion",params,body]
 
-def do_aufrufen(envs,args): # Delete value
+def do_method(envs, args):
+    #import pdb; pdb.set_trace()
+    assert len(args) >= 1
+    func = do(envs, args[0])
+    arguments = args[1:]
+    values = [do(envs,arg) for arg in arguments]
+    assert isinstance(func,list)
+    assert func[0] == "funktion"
+    func_params = func[1]
+    assert len(func_params) == len(values)
+
+    local_frame = dict(zip(func_params,values))
+    envs.append(local_frame)
+    body = func[2]
+    result = do(envs,body)
+    envs.pop()
+    return result
+
+def do_aufrufen(envs,args): 
     #import pdb; pdb.set_trace()
     assert len(args) >= 1
     name = args[0]
@@ -133,7 +151,11 @@ def do_dict(envs,args):
     else:
         temp_dict = dict()
         for i in range(len(args[0])):
-            temp_dict[args[0][i]] = args[1][i]
+            if isinstance(args[1][i], list):
+                value = do(envs, args[1][i])
+            else:
+                value = args[1][i]
+            temp_dict[args[0][i]] = value
         return temp_dict
 
 def do_get_dict(envs,args):
