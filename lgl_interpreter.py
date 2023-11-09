@@ -1,6 +1,54 @@
 import sys
 import json
 
+import csv
+from datetime import datetime
+import functools
+import argparse
+
+######## CREATE THE TRACE ########################
+
+def trace(trace_file):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            call_id = id(args) + id(kwargs)
+            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+            with open(trace_file, 'a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([call_id, func.__name__, 'start', timestamp])
+            result = func(*args, **kwargs)
+            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+            with open(trace_file, 'a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([call_id, func.__name__, 'stop', timestamp])
+            return result
+        return wrapper
+    return decorator
+
+#####################################################
+
+def main():
+    parser = argparse.ArgumentParser(description='LGL Interpreter with optional tracing.')
+    parser.add_argument('filename', help='The LGL script file to interpret.')
+    parser.add_argument('--trace', help='Enable tracing and specify the trace file.', default='')
+    args = parser.parse_args()
+
+    if args.trace:
+        global trace
+        trace = trace(args.trace)
+    else:
+        def trace(func):
+            return func
+
+    with open(args.filename, "r") as source_file:
+        program = json.load(source_file)
+    print(program)
+    assert isinstance(program, list)
+    envs = [{}]
+    result = do(envs, program)
+    print(f"Last result => {result}")
+################################################
 in_use = None
 
 def do_funktion(envs,args): # TODO: Review what this does
@@ -90,7 +138,7 @@ def do_setzen(envs,args): # Set a value
 def do_abrufen(envs,args): # Obtain value of variable
     assert len(args) == 1
     return envs_get(envs,args[0])
-
+@trace('trace_file.log')
 def do_addieren(envs,args):
     assert len(args) == 2
     left = do(envs,args[0])
@@ -130,7 +178,7 @@ def do_division(envs,args):
     left = do(envs,args[0])
     right = do(envs,args[1])
     return left/right
-
+@trace('trace_file.log')
 def do_power(envs,args):
     assert len(args) == 2
     left = do(envs,args[0])
@@ -263,15 +311,15 @@ def do(envs,expr):
     return func(envs, expr[1:])
 
 
-def main():
-    assert len(sys.argv) == 2, "Usage: funcs-demo.py filename.gsc"
-    with open(sys.argv[1], "r") as source_file:
-        program = json.load(source_file)
-    print(program)
-    assert isinstance(program,list)
-    envs = [{}]
-    result = do(envs,program)
-    print(f"Last result => {result}")
+#def main():
+ #   assert len(sys.argv) == 2, "Usage: funcs-demo.py filename.gsc"
+  #  with open(sys.argv[1], "r") as source_file:
+   #     program = json.load(source_file)
+    #print(program)
+    #assert isinstance(program,list)
+    #envs = [{}]
+    #result = do(envs,program)
+    #print(f"Last result => {result}")
 
 if __name__ == "__main__":
     main()

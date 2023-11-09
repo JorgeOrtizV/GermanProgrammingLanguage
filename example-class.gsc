@@ -70,5 +70,4 @@
 
     ["addieren", ["method", ["get_dict", ["get_dict", ["abrufen", "mySquare"], "parent"], "_shape_density"], ["get_dict", ["abrufen", "mySquare"], "area"], 5], ["method", ["get_dict", ["get_dict", ["abrufen", "myCircle"], "parent"], "_shape_density"], ["get_dict", ["abrufen", "myCircle"], "area"], 5]]
 
-
 ]
