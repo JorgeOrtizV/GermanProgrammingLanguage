@@ -77,9 +77,38 @@ Performance Reporting: The reporting script is crucial for understanding the per
 
 ## Outputs
 
-Sample output
+Sample output of reproting.py 
+• The first column contains the name of the function
+• The second column contains the number of calls of the function
+• The third column contains the total execution time of the function, summed across all the executions
+• The fourth column contains the average execution time, which is obtained by dividing the Total Time
+with the Num. of calls
 
-![image](https://github.com/JorgeOrtizV/GermanProgrammingLanguage/assets/141324290/16390f2a-fe11-4e6b-a652-04d8339864fb)
+```bash
+| Function Name | Num. of calls | Total Time (ms) | Average Time (ms) |
+|---------------|---------------|-----------------|-------------------|
+| do_addieren   | 39            | 38.219          | 0.980             |
+| do_power      | 11            | 6.933           | 0.630             |
+```
+
+Sample output of trace.log
+
+• The first column has a unique ID for distinguishing separate calls of the same function. 
+• The second column shows the name of the function that was called.
+• The third column indicates the event type, specifying if the function has started (‘start’) or ended
+(‘stop’).
+• The fourth column logs the timestamp of the event.
+
+```bash
+4759150059520,do_power,start,2023-11-09 17:33:56.001394
+4759150059520,do_power,stop,2023-11-09 17:33:56.002439
+4759150572416,do_addieren,start,2023-11-09 17:33:56.003744
+4759150572416,do_addieren,stop,2023-11-09 17:33:56.004753
+3723568417920,do_power,start,2023-11-09 17:34:02.661994
+3723568417920,do_power,stop,2023-11-09 17:34:02.661994
+3723568695616,do_addieren,start,2023-11-09 17:34:02.661994
+
+```
 
 
 
