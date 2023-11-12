@@ -93,10 +93,10 @@ with the Num. of calls
 
 Sample output of trace.log
 
-• The first column has a unique ID for distinguishing separate calls of the same function./n
-• The second column shows the name of the function that was called.\n
+• The first column has a unique ID for distinguishing separate calls of the same function. 
+• The second column shows the name of the function that was called. 
 • The third column indicates the event type, specifying if the function has started (‘start’) or ended
-(‘stop’).
+(‘stop’). 
 • The fourth column logs the timestamp of the event.
 
 ```bash
