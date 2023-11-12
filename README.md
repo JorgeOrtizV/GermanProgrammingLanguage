@@ -1,6 +1,6 @@
 # README
 ## Overview
-This Python script, named 'lgl_interpreter.py', encompasses all the essential functions required for constructing our interpreter. The file 'example_operations.gsc' includes a straightforward program designed to demonstrate the exercise's functionalities. Additionally, 'example_class.gsc' provides a detailed implementation of our classes. The 'example_trace.gsc' file is dedicated to outlining the functions we aim to trace. Lastly, 'reporting.py' is tasked with collecting tracer results and presenting them in an organized, tabular format.
+This Python script, named `lgl_interpreter.py`, encompasses all the essential functions required for constructing our interpreter. The file `example_operations.gsc` includes a straightforward program designed to demonstrate the exercise's functionalities. Additionally, `example_class.gsc` provides a detailed implementation of our classes. The `example_trace.gsc` file is dedicated to outlining the functions we aim to trace. Lastly, `reporting.py` is tasked with collecting tracer results and presenting them in an organized, tabular format.
 
 ## Features
 
@@ -19,8 +19,9 @@ This Python script, named 'lgl_interpreter.py', encompasses all the essential fu
 ### Running the Interpreter
 To run the LGL interpreter with a specific .gsc file, use the following command:
 
+```bash
 python lgl_interpreter.py [filename].gsc
-
+```
 Example Files
 
 example_operations.gsc: Demonstrates arithmetic operations, control structures, and data structures.
@@ -32,12 +33,16 @@ example_trace.gsc: Used for tracing function calls.
 ### Tracing
 To enable tracing, use the --trace argument:
 
+```bash
 python lgl_interpreter.py example_trace.gsc --trace trace_file.log
+```
 
 ### Reporting
 Run the reporting.py script to display tracing results in an aggregated format:
 
+```bash
 python reporting.py trace_file.log
+```
 
 ## Description of the files
 ### 1. lgl_interpreter.py
@@ -49,10 +54,10 @@ Function Definitions: Functions like do_funktion, do_method, do_aufrufen, etc., 
 Operations Mapping: The OPERATIONS dictionary maps string operation names to their corresponding functions.
 
 ### 2. Example-Operation.gsc
-Demonstrates a sequence of operations ("abfolge") including arithmetic operations, array and dictionary manipulations, and function calls.
+Demonstrates a sequence of operations `abfolge` including arithmetic operations, array and dictionary manipulations, and function calls.
 
 ### 3. Example-Class.gsc
-Illustrates object-oriented programming features with classes like Shape, Square, Circle, and their methods for calculating areas and densities.
+Illustrates object-oriented programming features with classes like `Shape, Square, Circle,` and their methods for calculating areas and densities.
 
 ### 4. Example-trace.gsc
 Contains a simple program using functions for calculating the sum of cubes.
@@ -69,4 +74,13 @@ Dynamic Environment Management: Enables scoping and variable tracking.
 Extensive Set of Operations: Covers basic arithmetic, array and dictionary operations, and control structures like loops.
 Object-Oriented Constructs: Demonstrates a basic form of object-oriented programming in a JSON-based language.
 Performance Reporting: The reporting script is crucial for understanding the performance characteristics of the interpreter.
+
+## Outputs
+
+Sample output
+
+![image](https://github.com/JorgeOrtizV/GermanProgrammingLanguage/assets/141324290/16390f2a-fe11-4e6b-a652-04d8339864fb)
+
+
+
 
