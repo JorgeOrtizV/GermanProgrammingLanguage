@@ -42,7 +42,7 @@
     ["set_dict", ["abrufen", "Square"], "square_area", ["abrufen", "square_area"]],
 
     ["setzen", "mySquare", ["aufrufen", "square_new", "sq", 3]],
-    ["print", ["setzen", "mySquare", ["method", ["get_dict", ["abrufen", "mySquare"], "square_area"], ["get_dict", ["abrufen", "mySquare"], "side"]]]],
+    ["setzen", "mySquare", ["method", ["get_dict", ["abrufen", "mySquare"], "square_area"], ["get_dict", ["abrufen", "mySquare"], "side"]]],
 
 
 
@@ -66,8 +66,8 @@
     ["set_dict", ["abrufen", "Circle"], "circle_area", ["abrufen", "circle_area"]],
 
     ["setzen", "myCircle", ["aufrufen", "circle_new", "ci", 2]],
-    ["print", ["setzen", "myCircle", ["method", ["get_dict", ["abrufen", "myCircle"], "circle_area"], ["get_dict", ["abrufen", "myCircle"], "radius"]]]],
+    ["setzen", "myCircle", ["method", ["get_dict", ["abrufen", "myCircle"], "circle_area"], ["get_dict", ["abrufen", "myCircle"], "radius"]]],
 
-    ["print", ["addieren", ["method", ["get_dict", ["get_dict", ["abrufen", "mySquare"], "parent"], "_shape_density"], ["get_dict", ["abrufen", "mySquare"], "area"], 5], ["method", ["get_dict", ["get_dict", ["abrufen", "myCircle"], "parent"], "_shape_density"], ["get_dict", ["abrufen", "myCircle"], "area"], 5]]]
+    ["addieren", ["method", ["get_dict", ["get_dict", ["abrufen", "mySquare"], "parent"], "_shape_density"], ["get_dict", ["abrufen", "mySquare"], "area"], 5], ["method", ["get_dict", ["get_dict", ["abrufen", "myCircle"], "parent"], "_shape_density"], ["get_dict", ["abrufen", "myCircle"], "area"], 5]]
 
 ]
