@@ -1,6 +1,6 @@
 # README
 ## Overview
-This Python script, named `lgl_interpreter.py`, encompasses all the essential functions required for constructing our interpreter. The file `example_operations.gsc` includes a straightforward program designed to demonstrate the exercise's functionalities. Additionally, `example_class.gsc` provides a detailed implementation of our classes. The `example_trace.gsc` file is dedicated to outlining the functions we aim to trace. Lastly, `reporting.py` is tasked with collecting tracer results and presenting them in an organized, tabular format.
+This Python script, named `lgl_interpreter.py`, encompasses all the essential functions required for constructing our interpreter. The file `example_operations.gsc` includes a straightforward program designed to demonstrate the Task 1 functionalities, which cover basic arithmetic operations and creation of data structures as arraýs and dictionaries. Additionally, `example-class.gsc` provides a detailed program to implement clases and create instances, which support inheritance and polymorphism. The `example-trace.gsc` file is a sample program used to test the logging capabilites. Lastly, `reporting.py` is tasked with collecting tracer results and presenting them in an organized, tabular format.
 
 ## Features
 
@@ -26,9 +26,9 @@ Example Files
 
 example_operations.gsc: Demonstrates arithmetic operations, control structures, and data structures.
 
-example_class.gsc: Showcases object-oriented features with a UML class diagram implementation.
+example-class.gsc: Showcases object-oriented features with a UML class diagram implementation.
 
-example_trace.gsc: Used for tracing function calls.
+example-trace.gsc: Used for tracing function calls.
 
 ### Tracing
 To enable tracing, use the --trace argument:
@@ -36,6 +36,64 @@ To enable tracing, use the --trace argument:
 ```bash
 python lgl_interpreter.py example_trace.gsc --trace trace_file.log
 ```
+
+### Extended output
+The user will only see as a feedback what he/she asks the interpreter to print, as it works in python, so if the instruction file (.gsc file) doesn't have any prints, the user won't see any output value
+To see a detailed information of the program flow, the user can give the optional --verbose flag.
+
+```bash
+python lgl_interpreter.py example_trace.gsc --verbose
+```
+
+Sample output without verbose:
+```bash
+PS C:\UZH\SoftwareConstruction\GermanProgrammingLanguage> python .\lgl_interpreter.py .\example_operations.gsc --verbose
+Operation 1 -> 4
+Operation 2 -> 4.0
+Operation 3 -> 9
+30.0
+Operation 4 -> None
+Created instance myarray with value [None, None, None, None, None]
+Operation 5 -> [None, None, None, None, None]
+Operation 6 -> None
+Operation 7 -> None
+[None, None, None, 5, None]
+Operation 8 -> None
+Created instance mydict with value {'key1': 1, 'key2': 2}
+Operation 9 -> {'key1': 1, 'key2': 2}
+Operation 10 -> 1
+Operation 11 -> None
+{'key1': 1, 'key2': 20}
+Operation 12 -> None
+Created instance mydict2 with value {'key3': 5, 'key4': 6}
+Operation 13 -> {'key3': 5, 'key4': 6}
+Operation 14 -> {'key1': 1, 'key2': 20, 'key3': 5, 'key4': 6}
+Created instance increase with value ['funktion', ['num'], ['addieren', ['abrufen', 'num'], 1]]
+Operation 15 -> ['funktion', ['num'], ['addieren', ['abrufen', 'num'], 1]]
+Created instance a with value 0
+Operation 16 -> 0
+Created instance a with value 1
+Created instance a with value 2
+Created instance a with value 3
+Created instance a with value 4
+Created instance a with value 5
+Created instance a with value 6
+Created instance a with value 7
+Created instance a with value 8
+Created instance a with value 9
+Created instance a with value 10
+Operation 17 -> None
+Last result => None
+```
+
+Sample output without verbose:
+```bash
+PS C:\UZH\SoftwareConstruction\GermanProgrammingLanguage> python .\lgl_interpreter.py .\example_operations.gsc
+30.0
+[None, None, None, 5, None]
+{'key1': 1, 'key2': 20}
+```
+
 
 ### Reporting
 Run the reporting.py script to display tracing results in an aggregated format:
@@ -53,13 +111,13 @@ Environment Handling: Manages variable scopes using a list of dictionaries (envs
 Function Definitions: Functions like do_funktion, do_method, do_aufrufen, etc., represent different operations in the language.
 Operations Mapping: The OPERATIONS dictionary maps string operation names to their corresponding functions.
 
-### 2. Example-Operation.gsc
+### 2. example_operations.gsc
 Demonstrates a sequence of operations `abfolge` including arithmetic operations, array and dictionary manipulations, and function calls.
 
-### 3. Example-Class.gsc
+### 3. example-Class.gsc
 Illustrates object-oriented programming features with classes like `Shape, Square, Circle,` and their methods for calculating areas and densities.
 
-### 4. Example-trace.gsc
+### 4. example-trace.gsc
 Contains a simple program using functions for calculating the sum of cubes.
 
 ### 5. reporting.py
@@ -100,14 +158,12 @@ Sample output of trace.log
 • The fourth column logs the timestamp of the event.
 
 ```bash
-4759150059520,do_power,start,2023-11-09 17:33:56.001394
-4759150059520,do_power,stop,2023-11-09 17:33:56.002439
-4759150572416,do_addieren,start,2023-11-09 17:33:56.003744
-4759150572416,do_addieren,stop,2023-11-09 17:33:56.004753
-3723568417920,do_power,start,2023-11-09 17:34:02.661994
-3723568417920,do_power,stop,2023-11-09 17:34:02.661994
-3723568695616,do_addieren,start,2023-11-09 17:34:02.661994
-
+5549701017536,add_cubes,start,2023-11-13 22:50:21.605683
+5549701291584,get_cube_power,start,2023-11-13 22:50:21.605683
+5549701291584,get_cube_power,stop,2023-11-13 22:50:21.606683
+5549701345280,get_cube_power,start,2023-11-13 22:50:21.606683
+5549701345280,get_cube_power,stop,2023-11-13 22:50:21.606683
+5549701017536,add_cubes,stop,2023-11-13 22:50:21.607682
 ```
 
 
