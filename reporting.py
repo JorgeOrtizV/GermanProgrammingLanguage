@@ -1,6 +1,7 @@
 import argparse
 import csv
 from datetime import datetime
+from tabulate import tabulate
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Generate report from trace file.')
@@ -38,7 +39,4 @@ for func_name, times in trace_data.items():
 report_data.sort(key=lambda x: x[0])
 
 # Output the report
-print("| Function Name | Num. of calls | Total Time (ms) | Average Time (ms) |")
-print("|---------------|---------------|-----------------|-------------------|")
-for func_name, num_calls, total_time, avg_time in report_data:
-    print(f"| {func_name:<13} | {num_calls:<13} | {total_time:<15.3f} | {avg_time:<17.3f} |")
+print(tabulate(report_data, headers=['Function Name', 'Num. of calls', 'Total Time (ms)', 'Average Time (ms)'], tablefmt='orgtbl'))
