@@ -37,6 +37,8 @@ To enable tracing, use the --trace argument:
 python lgl_interpreter.py example_trace.gsc --trace trace_file.log
 ```
 
+NOTE: When the same log file is used multiple times, all the logs will be appended to the previous existing ones. We decided this to be a better practice than overwritting if the same file is given to avoid loosing information that could be valuable.
+
 ### Extended output
 The user will only see as a feedback what he/she asks the interpreter to print, as it works in python, so if the instruction file (.gsc file) doesn't have any prints, the user won't see any output value
 To see a detailed information of the program flow, the user can give the optional --verbose flag.
