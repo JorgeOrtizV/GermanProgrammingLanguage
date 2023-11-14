@@ -6,37 +6,46 @@ from datetime import datetime
 import functools
 import argparse
 
+# Global variable to control tracing
+ENABLE_TRACING = False
 ######## CREATE THE TRACE ########################
 
 def trace(trace_file):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            call_id = id(args) + id(kwargs)
-            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-            with open(trace_file, 'a', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow([call_id, args[1][0], 'start', timestamp])
-            result = func(*args, **kwargs)
-            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-            with open(trace_file, 'a', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow([call_id, args[1][0], 'stop', timestamp])
+            if ENABLE_TRACING:
+                call_id = id(args) + id(kwargs)
+                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+                with open(trace_file, 'a', newline='') as f:
+                    writer = csv.writer(f)
+                    writer.writerow([call_id, args[1][0], 'start', timestamp])
+                result = func(*args, **kwargs)
+                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+                with open(trace_file, 'a', newline='') as f:
+                    writer = csv.writer(f)
+                    writer.writerow([call_id, args[1][0], 'stop', timestamp])
+            else:
+                result = func(*args, **kwargs)
             return result
         return wrapper
     return decorator
 
+
 #####################################################
 
 def main():
+    global ENABLE_TRACING
     parser = argparse.ArgumentParser(description='LGL Interpreter with optional tracing.')
     parser.add_argument('filename', help='The LGL script file to interpret.')
     parser.add_argument('--trace', help='Enable tracing and specify the trace file.', default='')
     parser.add_argument('--verbose', '-v', help='Print extra information about what is running', action=argparse.BooleanOptionalAction)
     args = parser.parse_args()
+        
     if args.trace:
-        file = open(args.trace, 'w')
-        trace(args.trace)
+        ENABLE_TRACING = True
+        #file = open(args.trace, 'w')
+        #file.close()
 
     with open(args.filename, "r") as source_file:
         program = json.load(source_file)
@@ -46,6 +55,30 @@ def main():
     result = do(envs, program, args.verbose)
     if args.verbose:
         print(f"Last result => {result}")
+
+
+
+
+
+
+#def main():
+ #   parser = argparse.ArgumentParser(description='LGL Interpreter with optional tracing.')
+  #  parser.add_argument('filename', help='The LGL script file to interpret.')
+   # parser.add_argument('--trace', help='Enable tracing and specify the trace file.', default='')
+    #parser.add_argument('--verbose', '-v', help='Print extra information about what is running', action=argparse.BooleanOptionalAction)
+    #args = parser.parse_args()
+    #if args.trace:
+     #   file = open(args.trace, 'w')
+      #  trace(args.trace)
+
+    #with open(args.filename, "r") as source_file:
+     #   program = json.load(source_file)
+    #print(program)
+    #assert isinstance(program, list)
+    #envs = [{}]
+    #result = do(envs, program, args.verbose)
+    #if args.verbose:
+     #   print(f"Last result => {result}")
 ################################################
 in_use = None
 
